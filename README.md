@@ -1,4 +1,4 @@
-﻿# Robôs SIGEF — NCONT GIZELY
+﻿# Robô SIGEF — Regularização de Convênios
 
 Automação de etapas de **certificação, liquidação de despesas e preparação de pagamentos** no SIGEF, utilizando uma planilha Excel como base de trabalho.
 
