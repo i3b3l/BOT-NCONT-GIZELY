@@ -1,0 +1,279 @@
+======================================================================
+ROBÔ SIGEF — CERTIFICAÇÃO, LIQUIDAÇÃO E PREPARAÇÃO DE PAGAMENTO
+Desenvolvido e adaptado por Izabel Galvão :3
+======================================================================
+
+Este pacote automatiza etapas do SIGEF usando as informações da planilha
+Pagamentos_Tratado.xlsx.
+
+O VS Code NÃO é necessário para utilizar o robô. A execução diária é feita
+pelos arquivos .bat incluídos nesta pasta.
+
+
+1. O QUE O ROBÔ FAZ
+======================================================================
+
+INICIAR_CERTIFICAR_LIQUIDAR.BAT
+
+• Confere a estrutura e os dados da planilha antes de acessar o SIGEF.
+• Certifica os registros que ainda não possuem Despesa Certificada (CE).
+• Copia o número completo da CE gerada pelo SIGEF para a coluna K.
+• Liquida os registros que possuem CE e ainda não possuem NL.
+• Copia o número completo da Nota de Liquidação para a coluna L.
+• Ignora linhas que já foram processadas.
+
+INICIAR_PREPARAR_PAGAMENTO.BAT
+
+• Processa registros que possuem uma NL válida e ainda não possuem PP.
+• Consulta a NL e confere o favorecido.
+• Seleciona o domicílio bancário informado na planilha.
+• Se a seleção automática não for possível, solicita a seleção manual.
+• Confere banco, agência e conta antes da confirmação.
+• Copia o número da Preparação de Pagamento para a coluna M.
+
+O robô não realiza login nem resolve CAPTCHA. Essas etapas são feitas
+manualmente pelo usuário.
+
+
+2. ARQUIVOS QUE DEVEM PERMANECER JUNTOS
+======================================================================
+
+• Certificar_Liquidar_Convenios.py
+• Preparar_Pagamento_Convenios.py
+• Iniciar_Certificar_Liquidar.bat
+• Iniciar_Preparar_Pagamento.bat
+• Pagamentos_Tratado.xlsx
+
+Não renomeie esses arquivos sem alterar também a configuração dos códigos.
+Não execute os arquivos diretamente de dentro de um ZIP. Extraia ou copie a
+pasta completa para o computador.
+
+
+3. INSTALAÇÃO EM UM COMPUTADOR NOVO
+======================================================================
+
+3.1 — Instalar o Google Chrome
+
+Instale o Google Chrome normalmente. O iniciador procura o Chrome nas pastas
+padrão do Windows e o abre com a porta de depuração exigida pelo robô.
+
+3.2 — Instalar o Python
+
+Instale o Python 3.10 ou superior.
+
+Durante a instalação, marque a opção:
+
+    Add Python to PATH
+
+Depois da instalação, feche e abra novamente o terminal do Windows.
+
+3.3 — Instalar as bibliotecas do robô
+
+Abra o Prompt de Comando e execute:
+
+    py -3 -m pip install --upgrade pip
+    py -3 -m pip install openpyxl playwright keyboard pyautogui
+
+Se o comando “py” não for reconhecido, use:
+
+    python -m pip install --upgrade pip
+    python -m pip install openpyxl playwright keyboard pyautogui
+
+O robô utiliza o Google Chrome já instalado. Não é necessário instalar os
+navegadores próprios do Playwright.
+
+3.4 — Copiar a pasta do robô
+
+Copie a pasta completa para um local em que o usuário possa salvar arquivos,
+por exemplo:
+
+    C:\Robo_SIGEF
+
+Evite executar o robô de pastas protegidas do Windows ou de unidades de rede.
+
+3.5 — Preparar a planilha
+
+A planilha utilizada pelos dois robôs deve se chamar:
+
+    Pagamentos_Tratado.xlsx
+
+Ela deve ficar na mesma pasta dos códigos e dos iniciadores.
+
+A planilha precisa manter estas abas:
+
+• Entrada
+• Despesas Certificadas
+• Notas de Liquidação
+• Preparações de Pagamento
+• Ordens Bancárias
+• Saída
+
+Mantenha a estrutura e os cabeçalhos originais. Identificadores como UG,
+gestão, CPF, banco, agência, conta e empenho devem permanecer como texto para
+que zeros à esquerda não sejam perdidos.
+
+
+4. COMO USAR — CERTIFICAR E LIQUIDAR
+======================================================================
+
+1. Salve e feche Pagamentos_Tratado.xlsx no Excel.
+2. Feche janelas antigas de consulta ou operação do SIGEF.
+3. Dê dois cliques em Iniciar_Certificar_Liquidar.bat.
+4. Se o Chrome de depuração não estiver aberto, o iniciador abrirá uma sessão.
+5. Faça login no SIGEF e resolva o CAPTCHA, se solicitado.
+6. Deixe apenas o menu principal do SIGEF aberto.
+7. Volte ao terminal e pressione uma tecla quando o iniciador solicitar.
+8. Na janela inicial do robô, confira as orientações e clique em Iniciar.
+9. Acompanhe no terminal as etapas de certificação e liquidação.
+10. Ao terminar, confira o resumo e os números gravados nas colunas K e L.
+
+O robô primeiro conclui as certificações pendentes e depois inicia as
+liquidações que estiverem aptas.
+
+
+5. COMO USAR — PREPARAR PAGAMENTOS
+======================================================================
+
+1. Salve e feche Pagamentos_Tratado.xlsx no Excel.
+2. Feche janelas antigas de consulta ou operação do SIGEF.
+3. Dê dois cliques em Iniciar_Preparar_Pagamento.bat.
+4. Faça login no SIGEF pelo Chrome aberto no modo de depuração.
+5. Deixe apenas o menu principal do SIGEF aberto.
+6. Volte ao terminal e pressione uma tecla quando o iniciador solicitar.
+7. Na janela inicial do robô, clique em Iniciar.
+8. Acompanhe no terminal a consulta da NL, a seleção bancária, as retenções e
+   a confirmação.
+9. Ao terminar, confira o resumo e os números gravados na coluna M.
+
+
+6. SELEÇÃO MANUAL DO DOMICÍLIO BANCÁRIO
+======================================================================
+
+Se o robô não encontrar uma única conta correspondente à planilha:
+
+1. Ele exibirá uma mensagem de seleção manual.
+2. Selecione no SIGEF o banco, a agência e a conta corretos.
+3. Volte à mensagem do robô e clique em Continuar.
+4. Se os dados escolhidos forem diferentes da planilha, o robô mostrará os
+   dois conjuntos de dados e pedirá uma confirmação explícita.
+
+Leia cuidadosamente essa confirmação. Escolher SIM autoriza o uso do
+domicílio selecionado no SIGEF para aquele pagamento.
+
+
+7. COMO INTERROMPER COM SEGURANÇA
+======================================================================
+
+Pressione ESC uma vez e aguarde a mensagem de encerramento.
+
+Não feche o terminal imediatamente. O robô precisa liberar os recursos e
+fechar a planilha em memória com segurança.
+
+Se a interrupção ocorrer depois de uma operação ter sido confirmada no SIGEF,
+consulte o documento no sistema antes de executar a mesma linha novamente.
+
+
+8. STATUS DE SEGURANÇA NA PLANILHA
+======================================================================
+
+PESQUISAR_CE
+    A CE pode ter sido criada, mas o número não pôde ser identificado.
+
+PESQUISAR_NL
+    A liquidação pode ter sido confirmada, mas a NL não pôde ser identificada.
+
+PESQUISAR_PP
+    A preparação pode ter sido confirmada ou interrompida em uma etapa
+    sensível e precisa ser conferida no SIGEF.
+
+Quando um desses status aparecer, NÃO apague o texto e não repita a operação
+automaticamente. Pesquise primeiro o documento no SIGEF. Depois de localizar
+o número correto, copie o identificador completo para a mesma célula.
+
+Exemplos:
+
+    2026CE009188
+    2026NL030305
+    2026PP012044
+
+
+9. PLANILHA DE RECUPERAÇÃO
+======================================================================
+
+Em condições normais, os resultados são gravados diretamente em:
+
+    Pagamentos_Tratado.xlsx
+
+Se houver falha ao salvar a planilha principal, o robô tentará preservar o
+estado atual em um único arquivo:
+
+    Pagamentos_Backup.xlsx
+
+Na execução seguinte, o robô oferecerá a recuperação antes de realizar novas
+operações.
+
+Nesse caso:
+
+1. Feche a planilha no Excel.
+2. Execute novamente o robô.
+3. Escolha Recuperar quando a mensagem aparecer.
+4. Confira a planilha principal antes de continuar.
+
+Não exclua Pagamentos_Backup.xlsx enquanto houver uma recuperação pendente.
+
+
+10. CUIDADOS IMPORTANTES
+======================================================================
+
+• Execute apenas um dos robôs por vez.
+• Mantenha a planilha fechada durante toda a execução.
+• Não navegue nas janelas controladas pelo robô.
+• Não altere a planilha enquanto o robô estiver em execução.
+• Não feche os pop-ups do SIGEF que o robô estiver utilizando.
+• Aguarde a gravação do número na planilha antes de iniciar outra operação.
+• Confira no SIGEF qualquer operação interrompida após a confirmação.
+• Faça login somente no endereço oficial do SIGEF.
+• Não compartilhe planilhas contendo dados pessoais sem autorização.
+
+
+11. PROBLEMAS COMUNS
+======================================================================
+
+“Python não foi encontrado”
+    Reinstale o Python e marque Add Python to PATH. Depois, reinicie o terminal.
+
+“Faltam dependências do robô”
+    Execute os comandos da seção 3.3 usando o mesmo Python reconhecido pelo
+    iniciador.
+
+“Google Chrome não encontrado”
+    Instale o Chrome na pasta padrão do Windows.
+
+“Não foi localizado um único menu do SIGEF”
+    Feche as janelas antigas do SIGEF e deixe apenas uma guia no menu principal.
+
+“Planilha não encontrada”
+    Confira se Pagamentos_Tratado.xlsx está na mesma pasta dos códigos.
+
+“Não foi possível salvar a planilha”
+    Feche o Excel. Preserve Pagamentos_Backup.xlsx e use a recuperação na
+    próxima execução.
+
+O robô parou depois de confirmar uma operação
+    Não repita a linha imediatamente. Consulte primeiro a CE, NL ou PP no SIGEF.
+
+
+12. ATUALIZAÇÃO OU ENVIO PARA OUTRO COMPUTADOR
+======================================================================
+
+Ao enviar o robô para outro computador, copie juntos os dois arquivos .py,
+os dois iniciadores .bat e a planilha correta. Instale o Python, o Chrome e as
+bibliotecas nesse novo computador.
+
+Antes de enviar uma planilha real, verifique se o destinatário está autorizado
+a acessar os dados pessoais e financeiros nela contidos.
+
+
+======================================================================
+FIM DO GUIA
+======================================================================
