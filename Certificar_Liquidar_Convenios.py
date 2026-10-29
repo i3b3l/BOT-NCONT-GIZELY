@@ -1,5 +1,8 @@
-# -*- coding: utf-8 -*-
-# Por Izabel Galvão :3
+# ============================================================
+# FEITO COM <3 POR IZABEL GALVAO :3
+# ATUALIZACOES NO MEU GITHUB: https://github.com/i3b3l
+# ============================================================
+
 """
 PROCEDIMENTO: CERTIFICAR E LIQUIDAR COM DATA DE PAGAMENTO
 Versão revisada + UP de pré-validação, alinhamento das abas e segurança operacional.

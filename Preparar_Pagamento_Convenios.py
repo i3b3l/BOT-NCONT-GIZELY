@@ -1,5 +1,8 @@
-# -*- coding: utf-8 -*-
-# Por Izabel Galvão :3
+# ============================================================
+# FEITO COM <3 POR IZABEL GALVAO :3
+# ATUALIZACOES NO MEU GITHUB: https://github.com/i3b3l
+# ============================================================
+
 """PP Despesa Empenhada — revisão do fluxo original de Louise/SESDEC.
 
 Execute na mesma pasta de certificar_liquidar_data_pagamento_v2.py.
